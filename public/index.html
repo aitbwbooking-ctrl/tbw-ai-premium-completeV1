@@ -1,146 +1,174 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0aa86b" />
-  <title>TBW AI PREMIUM Navigator</title>
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="/style.css" />
+<meta charset="UTF-8">
+<title>TBW AI PREMIUM NAVIGATOR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061b14">
+
+<style>
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif}
+body{margin:0;background:#061b14;color:#fff}
+
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;inset:0;
+  background:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+#intro video{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+#intro.fade{animation:fadeOut 1.2s forwards}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+
+/* ===== HEADER ===== */
+header{
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:linear-gradient(180deg,#0b2a1f,#061b14);
+}
+header b{color:#2dff9a}
+.badge{background:#173f2e;padding:6px 10px;border-radius:20px;font-size:12px}
+
+/* ===== HERO ===== */
+.hero{
+  margin:12px;
+  border-radius:26px;
+  overflow:hidden;
+  position:relative;
+}
+.hero img{
+  width:100%;height:360px;object-fit:cover;
+}
+.hero .overlay{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at center,transparent 40%,#061b14 85%);
+}
+.hero .content{
+  position:absolute;bottom:20px;left:20px;right:20px;
+}
+.hero h1{margin:0;font-size:34px}
+.hero p{margin:6px 0 14px;opacity:.85}
+
+.hero .actions{
+  display:flex;gap:12px;
+}
+.hero button{
+  flex:1;border:0;border-radius:999px;
+  padding:14px;font-size:15px;
+  background:#1d2d26;color:#fff;
+}
+.hero .primary{background:#2dff9a;color:#000;font-weight:700}
+
+/* ===== SEARCH ===== */
+.search{
+  margin:16px;
+  display:flex;
+  gap:10px;
+}
+.search input{
+  flex:1;
+  padding:16px;border-radius:16px;border:0;
+}
+.search button{
+  padding:16px 22px;
+  border-radius:16px;border:0;
+  background:#2dff9a;font-weight:700;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  padding:0 16px 24px;
+}
+.card{
+  background:#0c261c;
+  border-radius:20px;
+  padding:18px;
+}
+.card h3{margin:0;color:#2dff9a}
+.card p{margin:6px 0 0;font-size:14px;opacity:.8}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:14px;
+  text-align:center;
+  font-size:12px;
+  opacity:.6;
+}
+</style>
 </head>
+
 <body>
-  <!-- INTRO OVERLAY (auto closes) -->
-  <div id="intro" class="intro" aria-hidden="true">
-    <div class="introInner">
-      <div class="introGlow"></div>
-      <div class="introMark" aria-label="TBW intro mark"></div>
-      <div class="introText">
-        <div class="introTitle">TBW AI <span>PREMIUM</span></div>
-        <div class="introSub">Navigator • Travel • Safety</div>
-      </div>
-      <button id="skipIntro" class="introSkip" type="button">Skip</button>
+
+<!-- INTRO -->
+<div id="intro">
+  <video autoplay muted playsinline>
+    <source src="https://cdn.coverr.co/videos/coverr-earth-from-space-9713/1080p.mp4" type="video/mp4">
+  </video>
+</div>
+
+<header>
+  <div><b>TBW AI</b> PREMIUM</div>
+  <div class="badge">● LIVE · GPS OK</div>
+</header>
+
+<section class="hero">
+  <img src="https://images.unsplash.com/photo-1543349689-9a4d426bee8e?q=80&w=1600">
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>Paris</h1>
+    <p>Eiffel Tower · Champ de Mars</p>
+    <div class="actions">
+      <button class="primary">NAVIGATE</button>
+      <button>SAVE</button>
+      <button>STREET VIEW</button>
     </div>
   </div>
+</section>
 
-  <div id="app" class="app">
-    <header class="topbar">
-      <div class="brand">
-        <img class="brandIcon" src="/icon-192.png" alt="TBW" />
-        <div class="brandText">
-          <div class="brandName">TBW AI <span class="accent">PREMIUM</span></div>
-          <div class="brandTag">Navigator • Travel • Safety</div>
-        </div>
-      </div>
+<div class="search">
+  <input placeholder="Ask TBW AI...">
+  <button>GO</button>
+</div>
 
-      <div class="topRight">
-        <div class="pill" id="livePill">
-          <span class="dot" id="liveDot"></span>
-          <span id="liveText">LIVE</span>
-          <span class="sep">•</span>
-          <span id="gpsText">GPS OK</span>
-        </div>
-
-        <select id="langSel" class="langSel" aria-label="Language"></select>
-      </div>
-    </header>
-
-    <div class="tickerWrap">
-      <div class="ticker" id="ticker">
-        <div class="tickerTrack" id="tickerTrack"></div>
-      </div>
-    </div>
-
-    <main class="main">
-      <section class="heroCard" id="heroCard">
-        <div class="heroImg" id="heroImg"></div>
-        <div class="heroOverlay">
-          <div class="heroMeta">
-            <div class="heroCity" id="heroCity">Paris</div>
-            <div class="heroPlace" id="heroPlace">Eiffel Tower • Champ de Mars</div>
-            <div class="heroBadges">
-              <span class="badge" id="tierBadge">DEMO</span>
-              <span class="badge" id="tempBadge">+19°C</span>
-            </div>
-          </div>
-
-          <div class="heroActions">
-            <button class="btn primary" id="btnNavigate">NAVIGATE</button>
-            <button class="btn" id="btnSave">SAVE</button>
-            <button class="btn" id="btnStreet">STREET VIEW</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="searchRow">
-        <input id="mainSearch" class="searchInput" placeholder="Ask TBW AI..." autocomplete="off" />
-        <button id="btnSearch" class="btn go">GO</button>
-      </section>
-
-      <section class="cards">
-        <button class="card" data-open="nav">
-          <div class="cardTitle" data-i18n="navTitle">Navigation</div>
-          <div class="cardSub" data-i18n="navSub">AI guided routing</div>
-        </button>
-        <button class="card" data-open="book">
-          <div class="cardTitle" data-i18n="bookTitle">Booking</div>
-          <div class="cardSub" data-i18n="bookSub">Hotels • Apartments</div>
-        </button>
-        <button class="card" data-open="weather">
-          <div class="cardTitle" data-i18n="weatherTitle">Weather</div>
-          <div class="cardSub" data-i18n="weatherSub">Live conditions</div>
-        </button>
-        <button class="card" data-open="traffic">
-          <div class="cardTitle" data-i18n="trafficTitle">Traffic</div>
-          <div class="cardSub" data-i18n="trafficSub">Incidents & alerts</div>
-        </button>
-        <button class="card" data-open="events">
-          <div class="cardTitle" data-i18n="eventsTitle">Events</div>
-          <div class="cardSub" data-i18n="eventsSub">Concerts & nightlife</div>
-        </button>
-        <button class="card" data-open="safety">
-          <div class="cardTitle" data-i18n="safetyTitle">Safety</div>
-          <div class="cardSub" data-i18n="safetySub">Alerts & guidance</div>
-        </button>
-      </section>
-
-      <section class="cityRow">
-        <div class="cityLabel" data-i18n="cityLabel">CITY</div>
-        <div class="cityPills">
-          <button class="chip" data-city="Paris">Paris</button>
-          <button class="chip" data-city="Split">Split</button>
-          <button class="chip" data-city="Zadar">Zadar</button>
-          <button class="chip" data-city="Zagreb">Zagreb</button>
-          <button class="chip" data-city="Karlovac">Karlovac</button>
-        </div>
-      </section>
-
-      <footer class="legal">
-        TBW AI PREMIUM NAVIGATOR is an informational tool only. It does not replace official traffic, weather, maritime or aviation sources.
-        Always follow road signs, police instructions and official emergency services. All rights reserved.
-      </footer>
-    </main>
-
-    <!-- MODAL -->
-    <div class="modal" id="modal" aria-hidden="true">
-      <div class="modalCard">
-        <div class="modalHead">
-          <div class="modalTitle" id="modalTitle">Window</div>
-          <button class="iconBtn" id="modalClose" aria-label="Close">✕</button>
-        </div>
-        <div class="modalBody" id="modalBody"></div>
-      </div>
-    </div>
-
-    <!-- BOTTOM BAR -->
-    <nav class="bottomBar">
-      <button class="navBtn" data-open="nav"><span>Location</span></button>
-      <button class="navBtn" data-open="search"><span>Search</span></button>
-      <button class="navBtn" data-open="fav"><span>Favourite</span></button>
-      <button class="navBtn" data-open="menu"><span>Menu</span></button>
-    </nav>
+<section class="grid">
+  <div class="card">
+    <h3>Navigacija</h3>
+    <p>AI ruta</p>
   </div>
+  <div class="card">
+    <h3>Smještaj</h3>
+    <p>Hoteli · Apartmani</p>
+  </div>
+  <div class="card">
+    <h3>Vrijeme</h3>
+    <p>Uvjeti uživo</p>
+  </div>
+  <div class="card">
+    <h3>Promet</h3>
+    <p>Incidenti & upozorenja</p>
+  </div>
+</section>
 
-  <script src="/app.js" defer></script>
+<footer>
+TBW AI PREMIUM NAVIGATOR · Informational tool only
+</footer>
+
+<script>
+setTimeout(()=>{
+  document.getElementById("intro").classList.add("fade")
+},2600)
+</script>
+
 </body>
 </html>
